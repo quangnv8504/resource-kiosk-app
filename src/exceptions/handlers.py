@@ -26,4 +26,4 @@ def register_exception_handlers(app: Flask) -> None:
     @app.errorhandler(Exception)
     def handle_unexpected(exc: Exception):
         app.logger.exception("Unhandled exception: %s", exc)
-        return jsonify(_error_body(f"Lỗi hệ thống: {exc}")), 500
+        return jsonify(_error_body(f"{exc}")), 500

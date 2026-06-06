@@ -13,6 +13,8 @@ if _ROOT not in sys.path:
     sys.path.insert(0, _ROOT)
 
 import onnxruntime  # noqa: F401,E402 — load trước Flask/cv2 trong bản exe
+import tqdm  # noqa: F401,E402 — insightface.utils.download cần khi load model
+import skimage  # noqa: F401,E402 — insightface.utils.face_align cần khi load model
 
 from waitress import serve  # noqa: E402
 

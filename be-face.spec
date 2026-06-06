@@ -43,12 +43,25 @@ hiddenimports += [
     "numpy",
     "PIL",
     "onnx",
+    "tqdm",
+    "skimage",
+    "skimage.transform",
 ]
 
 tmp = collect_all("insightface")
 datas += tmp[0]
 binaries += tmp[1]
 hiddenimports += tmp[2]
+
+tmp_tqdm = collect_all("tqdm")
+datas += tmp_tqdm[0]
+binaries += tmp_tqdm[1]
+hiddenimports += tmp_tqdm[2]
+
+tmp_skimage = collect_all("skimage")
+datas += tmp_skimage[0]
+binaries += tmp_skimage[1]
+hiddenimports += tmp_skimage[2]
 
 try:
     import onnxruntime as _ort
@@ -80,12 +93,10 @@ a = Analysis(
         "torchvision",
         "tensorboard",
         "pandas",
-        "scipy",
         "sklearn",
-        "skimage",
         "sympy",
+        # scipy, skimage: insightface face_align cần — không exclude
         "gdown",
-        "tqdm",
     ],
     win_no_prefer_redirects=False,
     win_private_assemblies=False,
