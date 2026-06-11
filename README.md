@@ -1,6 +1,6 @@
 # BE Face API
 
-So khớp khuôn mặt (InsightFace + ONNX Runtime). Port mặc định: **8000**.
+So khớp khuôn mặt (InsightFace + ONNX Runtime). Port mặc định: **8001**.
 
 ## Chạy dev (Python)
 
@@ -35,5 +35,5 @@ Output: **`dist\be-face.exe`** (onefile, gồm model ONNX).
 
 ## API
 
-- `GET http://127.0.0.1:8000/health`
-- `POST http://127.0.0.1:8000/api/v1/compare` — JSON `{ "image1": "<base64>", "image2": "<base64>" }`
+- `GET http://127.0.0.1:8001/health`
+- `POST http://127.0.0.1:8001/api/v1/compare` — JSON `{ "image1": "<base64>", "image2": "<base64>" }`

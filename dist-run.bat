@@ -5,5 +5,5 @@ if not exist "dist\be-face.exe" (
     exit /b 1
 )
 set HOST=0.0.0.0
-set PORT=8000
+set PORT=8001
 dist\be-face.exe

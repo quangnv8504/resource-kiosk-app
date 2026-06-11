@@ -70,7 +70,7 @@ echo.
 echo === Build thanh cong ===
 echo Output: dist\be-face.exe
 echo Chay: .\dist-run.bat
-echo API: http://127.0.0.1:8000/api/v1/compare
+echo API: http://127.0.0.1:8001/api/v1/compare
 echo.
 pause
 exit /b 0

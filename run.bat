@@ -5,5 +5,5 @@ if not exist "venv\Scripts\python.exe" (
     exit /b 1
 )
 set HOST=0.0.0.0
-set PORT=8000
+set PORT=8001
 venv\Scripts\python.exe run_server.py

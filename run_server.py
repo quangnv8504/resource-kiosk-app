@@ -23,7 +23,7 @@ from src.main import create_app  # noqa: E402
 
 def main() -> None:
     host = os.environ.get("HOST", "0.0.0.0")
-    port = int(os.environ.get("PORT", "8000"))
+    port = int(os.environ.get("PORT", "8001"))
     app = create_app()
 
     print("BE Face API (InsightFace + ONNX):")
