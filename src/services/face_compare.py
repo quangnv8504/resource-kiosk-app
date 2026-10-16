@@ -59,24 +59,24 @@ class FaceCompareService:
     def _embedding(self, image: np.ndarray, field_name: str) -> np.ndarray:
         faces = self._app.get(image)
         if not faces:
-            raise BadRequestError(f"Không phát hiện được khuôn mặt trong ảnh khi so sánh.")
+            raise BadRequestError(f"Không phát hiện được khuôn mặt trong {field_name}.")
         face = max(
             faces,
             key=lambda f: float((f.bbox[2] - f.bbox[0]) * (f.bbox[3] - f.bbox[1])),
         )
         emb = face.normed_embedding
         if emb is None:
-            raise BadRequestError(f"Không trích xuất được embedding từ {field_name}.")
+            raise BadRequestError(f"Không trích xuất được đặc trưng khuôn mặt từ {field_name}.")
         return np.asarray(emb, dtype=np.float32).ravel()
 
     def compare_images(self, image1: str | None, image2: str | None) -> dict:
         if image1 is None or image2 is None:
             raise BadRequestError(
-                "Cần gửi ảnh (chuỗi base64). "
-                "JSON: Content-Type application/json, hoặc form field ảnh1/ảnh2."
+                "Cần gửi đủ 2 ảnh image1 và image2 (chuỗi base64) "
+                "qua JSON (Content-Type: application/json) hoặc form."
             )
         if not isinstance(image1, str) or not isinstance(image2, str):
-            raise BadRequestError("Ảnh phải là chuỗi base64")
+            raise BadRequestError("image1 và image2 phải là chuỗi base64.")
 
         img1 = base64_to_bgr(image1, "image1")
         img2 = base64_to_bgr(image2, "image2")

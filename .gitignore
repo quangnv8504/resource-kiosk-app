@@ -6,3 +6,4 @@ dist/
 *.pyo
 *.onnx
 *.pth
+.env

@@ -1,0 +1,10 @@
+services:
+  be-face:
+    image: ${BE_FACE_IMAGE:-be-face-v1:latest}
+    container_name: be-face-v1
+    restart: unless-stopped
+    ports:
+      - "${HOST_PORT:-8001}:8001"
+    environment:
+      CORS_ORIGINS: ${CORS_ORIGINS:-*}
+      MAX_CONTENT_LENGTH_MB: ${MAX_CONTENT_LENGTH_MB:-10}

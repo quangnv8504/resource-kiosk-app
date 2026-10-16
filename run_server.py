@@ -18,6 +18,7 @@ import skimage  # noqa: F401,E402 — insightface.utils.face_align cần khi loa
 
 from waitress import serve  # noqa: E402
 
+from src.api.pace_api import get_compare_service  # noqa: E402
 from src.main import create_app  # noqa: E402
 
 
@@ -25,6 +26,9 @@ def main() -> None:
     host = os.environ.get("HOST", "0.0.0.0")
     port = int(os.environ.get("PORT", "8001"))
     app = create_app()
+
+    print("Dang nap model InsightFace...")
+    get_compare_service()
 
     print("BE Face API (InsightFace + ONNX):")
     print(f"  Health:  http://127.0.0.1:{port}/health")

@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, jsonify
 from flask_cors import CORS
 
@@ -6,9 +8,22 @@ from src.services.face_compare import FaceCompareService
 from src.exceptions import register_exception_handlers
 
 
+def _cors_origins() -> str | list[str]:
+    raw = os.environ.get("CORS_ORIGINS", "*").strip()
+    if not raw or raw == "*":
+        return "*"
+    return [origin.strip() for origin in raw.split(",") if origin.strip()]
+
+
 def create_app() -> Flask:
     app = Flask(__name__)
-    CORS(app, resources={r"/*": {"origins": "*"}})
+
+    max_body_bytes = int(os.environ.get("MAX_CONTENT_LENGTH_MB", "10")) * 1024 * 1024
+    app.config["MAX_CONTENT_LENGTH"] = max_body_bytes
+    # Mặc định Flask 3.1 chỉ cho mỗi field form ~500KB, không đủ cho ảnh base64
+    app.config["MAX_FORM_MEMORY_SIZE"] = max_body_bytes
+
+    CORS(app, resources={r"/*": {"origins": _cors_origins()}})
     register_exception_handlers(app)
     app.register_blueprint(bp)
 
@@ -26,8 +41,5 @@ def create_app() -> Flask:
     return app
 
 
-app = create_app()
-
-
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8001, debug=True)
+    create_app().run(host="0.0.0.0", port=8001, debug=True)

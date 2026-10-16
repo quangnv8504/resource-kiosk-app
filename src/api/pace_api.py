@@ -1,3 +1,5 @@
+import threading
+
 from flask import Blueprint, jsonify, request
 
 from src.models.response_model import CompareResponse
@@ -5,12 +7,15 @@ from src.services.face_compare import FaceCompareService
 
 bp = Blueprint("face", __name__, url_prefix="/api/v1")
 _compare_service: FaceCompareService | None = None
+_compare_service_lock = threading.Lock()
 
 
-def _get_compare_service() -> FaceCompareService:
+def get_compare_service() -> FaceCompareService:
     global _compare_service
     if _compare_service is None:
-        _compare_service = FaceCompareService()
+        with _compare_service_lock:
+            if _compare_service is None:
+                _compare_service = FaceCompareService()
     return _compare_service
 
 
@@ -26,7 +31,7 @@ def compare_faces():
         image1 = request.form.get("image1")
         image2 = request.form.get("image2")
 
-    result = _get_compare_service().compare_images(image1, image2)
+    result = get_compare_service().compare_images(image1, image2)
 
     return jsonify(
         CompareResponse(
